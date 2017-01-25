@@ -1,5 +1,7 @@
 # Rubik's Cube Cheat Sheet
 
+Revision 2
+
 ------------------------------------------------------------------------
 
 # Table of Contents
@@ -292,9 +294,7 @@ Summary:
     U'
 
 
-```
 ========================================================================
-```
 
 # OLL
 
@@ -310,6 +310,7 @@ Summary:
   * Edges: Move cycle: LU -> UB -> RU
   * Edges flipped: LU, UB
 
+```
     Corners             Edges
 
       ___ ___ ___        ___ ___ ___
@@ -337,6 +338,7 @@ Summary:
     B|=Y=|=Y=|=Y=|G     B| Y | Y | Y |G
      |===|===|===|       |___|___|___| 
        R   R   R           R   R   R   
+```
 
   Moves:
 
@@ -347,6 +349,7 @@ Summary:
   1-Liner: (M' U M) U2 (M' U M)
 
   Alt.:
+
     R' L F R L'
     U2
     R' L F R L'

@@ -12,11 +12,11 @@ function makeBitString( i )
         text[ face ] = ((i >> face) & 1) ? '1' : '0';
 
     var output = ''
-        + text.slice( 0, 3).join() + '|'
-        + text.slice( 3, 8).join() + '|'
-        + text.slice( 8,13).join() + '|'
-        + text.slice(13,18).join() + '|'
-        + text.slice(18,21).join();
+        + text.slice( 0, 3).join('') + ':'
+        + text.slice( 3, 8).join('') + ':'
+        + text.slice( 8,13).join('') + ':'
+        + text.slice(13,18).join('') + ':'
+        + text.slice(18,21).join('');
     return output;
 }
 
@@ -167,7 +167,7 @@ function enum_yellow()
 
             //parity  = edgeParity( i );
             bitstring = makeBitString( i );
-            console.log( "%s/1296: #%s: %s", pad(valid,4), pad(i,8), bitstring );
+            console.log( "# %s/1296: @ %s: $ %s", pad(valid,4), pad(i,7), bitstring );
             valid++;
         }
     }

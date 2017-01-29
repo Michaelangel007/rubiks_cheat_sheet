@@ -54,6 +54,39 @@ function invalidEdge( state, edge1, edge2 )
     return (count != 1);
 }
 
+// ========================================================================
+function cornerParity( state )
+{
+    var parity = 0;
+    var corner;
+
+        corner = 0;
+        corner += ((state >>  0) & 1) * 1; // LUB
+        corner += ((state >>  3) & 1) * 2;
+        corner += ((state >>  4) & 1) * 3;
+        parity += corner;
+
+        corner = 0;
+        corner += ((state >>  2) & 1) * 1; // RUB
+        corner += ((state >>  7) & 1) * 2;
+        corner += ((state >>  6) & 1) * 3;
+        parity += corner;
+
+        corner = 0;
+        corner += ((state >> 13) & 1) * 1; // LUF
+        corner += ((state >> 18) & 1) * 2;
+        corner += ((state >> 14) & 1) * 3;
+        parity += corner;
+
+        corner = 0;
+        corner += ((state >> 17) & 1) * 1; // RUF
+        corner += ((state >> 20) & 1) * 2;
+        corner += ((state >> 16) & 1) * 3;
+        parity += corner;
+
+    return parity % 3;
+}
+
 /*
  * @param {Number} state - Last Layer k-factoridic state of cube: 0 .. 2^21
  */
@@ -62,17 +95,17 @@ function edgeParity( state )
 {
     var parity = 0;
 
-        parity += (state >>  1) & 1; // UB
-        parity += (state >>  5) & 1;
+        parity += ((state >>  1) & 1) * 1; // UB
+        parity += ((state >>  5) & 1) * 2;
 
-        parity += (state >>  8) & 1; // LU
-        parity += (state >>  9) & 1;
+        parity += ((state >>  8) & 1) * 1; // LU
+        parity += ((state >>  9) & 1) * 2;
 
-        parity += (state >> 11) & 1; // RU
-        parity += (state >> 12) & 1;
+        parity += ((state >> 11) & 1) * 1; // RU
+        parity += ((state >> 12) & 1) * 2;
 
-        parity += (state >> 15) & 1; // UF
-        parity += (state >> 19) & 1;
+        parity += ((state >> 15) & 1) * 1; // UF
+        parity += ((state >> 19) & 1) * 2;
 
     // Edge Parity % 2 = 0
     return parity % 2;
@@ -144,7 +177,8 @@ function enum_yellow()
 
     var valid = 1;
     var bitstring;
-    var parity;
+    var parityC;
+    var parityE;
 
     console.log( "Number of OLL permutations after F2L ..." );
 
@@ -165,9 +199,10 @@ function enum_yellow()
             if( invalidEdge( i, SHIFT_RU__pX, SHIFT_RU__pY ) ) continue; // RU
             if( invalidEdge( i, SHIFT__UF_pZ, SHIFT__UF_pY ) ) continue; // UB
 
-            //parity  = edgeParity( i );
+            parityC = cornerParity( i );
+            parityE = edgeParity( i );
             bitstring = makeBitString( i );
-            console.log( "# %s/1296: @ %s: $ %s", pad(valid,4), pad(i,7), bitstring );
+            console.log( "# %s/1296: @ %s: $ %s CP:%d EP:%d", pad(valid,4), pad(i,7), bitstring, parityC, parityE );
             valid++;
         }
     }

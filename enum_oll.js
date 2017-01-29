@@ -75,7 +75,7 @@ function edgeParity( state )
         parity += (state >> 19) & 1;
 
     // Edge Parity % 2 = 0
-    return parity % 2
+    return parity % 2;
 }
 
 /*

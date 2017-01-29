@@ -59,22 +59,20 @@ When `white` is facing Right, Front, or Up:
 
 ## Beginner F2L - Part 2 - RU to RF/RB
 
-Old-school (Top facing up):
+### Old-school (Top facing up):
 
  |Position |Moves             |
  |:--------|:-----------------|
  |LD to FR | R' D R D F D' F' |
 
-New-school (Top facing down):
+### New-school (Top facing down):
 
 * Middle RU to RF or RB (Top facing down)
 
-
-
-|Position | F2L b Moves                   |
-|:--------|:------------------------------|
-|RU to RF | R' U' R' U' R' U  R  U  R  U  |
-|RU to RB | R  U  R  U  R  U' R' U' R' U' |
+ |Position | F2L b Moves                   |
+ |:--------|:------------------------------|
+ |RU to RF | R' U' R' U' R' U  R  U  R  U  |
+ |RU to RB | R  U  R  U  R  U' R' U' R' U' |
 
 Alternate RU to RF:
 
@@ -197,6 +195,7 @@ There are 4 cases of yellow edges facing up:
 ### OLL "L"
 
   Note: 'L' is in top-left LU, RU
+
   Cycles: 6
 
 ```
@@ -214,6 +213,7 @@ There are 4 cases of yellow edges facing up:
      |___|___|___|      |___|___|___|
       CCW     CCW
 ```
+
   Moves:
 
     F U  R 
@@ -225,6 +225,7 @@ There are 4 cases of yellow edges facing up:
 
   Cycles: 6
 
+```
     Corners             Edges
 
       ___ ___ ___        ___ ___ ___
@@ -237,6 +238,8 @@ There are 4 cases of yellow edges facing up:
      |   |   |   |      |   | v/|   |
      | <-------> |      |   | 1 |   |
      |___|___|___|      |___|___|___|
+
+```
 
   Moves:
 

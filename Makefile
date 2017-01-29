@@ -1,8 +1,8 @@
-all: make_oll_bmp
+all: make_oll_perm_tga
 
 clean:
-	rm make_oll_bmp
+	rm make_oll_perm_tga
 
-make_oll_bmp: make_oll_bmp.cpp
+make_oll_bmp: make_oll_perm_tga.cpp
 	g++ -Wall -Wextra $< -o $@
 

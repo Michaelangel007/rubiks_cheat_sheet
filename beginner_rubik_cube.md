@@ -73,6 +73,21 @@ When `white` is facing Right, Front, or Up:
  |:--------|:------------------------------|
  |RU to RF | R' U' R' U' R' U  R  U  R  U  |
  |RU to RB | R  U  R  U  R  U' R' U' R' U' |
+ |rotate RF| R  U' R' U  F' U2 F  U2 F' U F|
+
+Alt. Rotate RF
+
+Bob Burton F2L #1
+http://www.cubewhiz.com/f2l.php
+Corner: FR
+
+    (R U' R') Dw (R' U2) (R U'2) (R' U R)
+
+ or
+
+F2L Cheat Sheet
+
+    R  U2 R' U  R  U2 R' y' R' U' R
 
 Alternate RU to RF:
 
@@ -80,6 +95,10 @@ Alternate RU to RF:
 
 References:
 
+* BadMephisto "Partial Edge Control" http://badmephisto.com/f2l.php
+* https://www.reddit.com/r/Cubers/comments/1htp2a/is_partial_edge_control_worth_it/
+* https://www.speedsolving.com/wiki/index.php/Partial_Edge_Control
+* https://www.speedsolving.com/wiki/index.php/Sledgehammer
 * 12:00 https://youtu.be/609nhVzg-5Q?t=720
 * F2L Cheat Sheet
 

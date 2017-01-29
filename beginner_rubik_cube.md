@@ -377,6 +377,7 @@ and
 |:--------|:------------------------------|
 |RU to RF | R' U' R' U' R' U  R  U  R  U  |
 |RU to RB | R  U  R  U  R  U' R' U' R' U' |
+|rotate RF| R  U' R' U  F' U2 F  U2 F' U F|
 
 * OLL
 
@@ -387,17 +388,20 @@ and
 
 and
 
-|Shape| OLL b Moves        | Notes            |
-|:---:|:-------------------|:-----------------|
-|`\|-`| U R U R' U R U2 R' | 'L' is UF and RU |
-| `|` | U R U R' U R U2 R' | Do 'L' twice     |
+|Shape     | OLL b Moves        | Notes            |
+|:--------:|:-------------------|:-----------------|
+|`\|-`     | U R U R' U R U2 R' | 'L' is UF and RU |
+| `|`      | U R U R' U R U2 R' | Do 'L' twice     |
+|PLL CW @UF| R' U R' U' R' U' R' U R  U R2 | Cycle UF -> RU -> UB |
+
 
 * PLL
 
-| Notes               | PLL a and b Moves    |
-|:--------------------|:---------------------|
-| Corner move non-RUF | U R  U' L' U R' U' L |
-| Corner rotate RUF   | R' D' R D R' D' R D  |
+| Notes                | PLL a and b Moves    |
+|:---------------------|:---------------------|
+| Corner move CCW @ RUF| U R  U' L' U R' U' L |
+| Corner rotate RUF    | R' D' R D R' D' R D  |
+| Corner rotate non-RUF| R' U2 R U R' U R U2 then PLL UF |
 
 ========================================================================
 

@@ -425,8 +425,8 @@ void makeBitmapOLL( int state )
     /* */ bgra_t *dst = &bitmap[0][0];
 
     // Initialize palette based on current state
-    int mask = (1 << 20);
-    for( int face = 0; face < 21; face++ )
+    int mask = 1 << SHIFT_LUB_nZ;
+    for( int face = 0; face < 21; ++face )
     {
         if( state & mask )
             palette[ face ] = palette[ COLOR_Y ];

@@ -128,6 +128,8 @@ function pad( text, width )
     = 1296 / (2*3*2)
     = 108
 
+    OLL Algoriths = 58
+
     Last Layer
 
         0   1   2

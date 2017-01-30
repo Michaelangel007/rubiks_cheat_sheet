@@ -2,10 +2,16 @@ OLL stage is done when cube reaches state:
 
     #  102/1296 @  118384 $ 000:01110:01110:01110:000 CP:0 EP:0
 
-OLL permtuations sorted by #
+OLL permtuations sorted by id.
 ```
     $ node enum_oll.js -c -i -n -p
 ```
+
+Legend:
+
+ * ID = Unique ID for OLL state
+ * CP = Corner Parity
+ * EP = Edge Parity
 
 All OLL states:
 

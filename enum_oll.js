@@ -106,7 +106,27 @@ function pad( text, width )
 
     * 2^21 yellow states (including bad/impossible states)
     * Removing illegal states = 1,296
-    * Removing bad edge parity = 
+    * Removing bad corner parity MOD 3 != 0
+    * Removing bad edge   parity MOD 2 != 0
+
+    http://math.stackexchange.com/questions/127577/how-to-tell-if-a-rubiks-cube-is-solvable
+
+    Last Layer Permutations
+    = 4!*3^4 * 4!*2^4 / (perm parity * corner parity * edge parity)
+    = 4! * 3^4 * 4! * 2^4 / (2*3*2)
+    = 4! * 3^3 * 4! * 2^2
+    = 24 * 27 * 24 * 4
+    = 62,208
+
+    Yellow OLL Permutations
+    = Corner Positions * Edge Positions
+    = 3^4 * 2^4
+    = 1296
+
+    Valid Yellow OLL Permutations
+    = 1296 / Parity
+    = 1296 / (2*3*2)
+    = 108
 
     Last Layer
 
@@ -127,8 +147,6 @@ function pad( text, width )
 */
 function enum_yellow()
 {
-    var i, n = (1 << 21);
-
     // 21 faces
     var SHIFT_LUB_nZ =   0;
     var SHIFT__UB_nZ =   1;
@@ -156,13 +174,13 @@ function enum_yellow()
     var SHIFT__UF_pZ =  19;
     var SHIFT_RUF_pZ =  20;
 
-    var valid = 1;
+    var i, n = (1 << 21);
+    var valid = 1, nth = 1296; // 216;
     var bitstring;
     var parityC;
     var parityE;
 
     console.log( "Number of OLL permutations after F2L ..." );
-
     for( i = 0; i < n; ++i )
     {
         // if middle is not yellow then cube is not valid
@@ -180,10 +198,14 @@ function enum_yellow()
             if( invalidEdge( i, SHIFT_RU__pX, SHIFT_RU__pY ) ) continue; // RU
             if( invalidEdge( i, SHIFT__UF_pZ, SHIFT__UF_pY ) ) continue; // UB
 
-            parityC = cornerParity( i );
-            parityE = edgeParity( i );
+            parityC   = cornerParity ( i );
+            parityE   = edgeParity   ( i );
             bitstring = makeBitString( i );
-            console.log( "# %s/1296: @ %s: $ %s CP:%d EP:%d", pad(valid,4), pad(i,7), bitstring, parityC, parityE );
+
+            //if (parityC != 0) continue; // 1296 -> 432
+            //if (parityE != 0) continue; //  432 -> 216
+         // console.log( "| %s/%d  | %s: | %s |  %d |  %d|", pad(valid,4), nth, pad(i,7), bitstring, parityC, parityE );
+            console.log( "# %s/%d: @ %s: $ %s CP:%d EP:%d" , pad(valid,4), nth, pad(i,7), bitstring, parityC, parityE );
             valid++;
         }
     }

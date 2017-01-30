@@ -1,15 +1,61 @@
 "use strict";
 
 /*
+    Last layer bottom facing up:
+
+        20  19  18
+       ___ ___ ___
+      |   |   |   |
+    17| 16| 15| 14|13
+      |___|___|___|
+      |   |   |   |
+    12| 11| 10| 9 | 8
+      |___|___|___|
+      |   |   |   |
+     7| 6 | 5 | 4 | 3
+      |___|___|___|
+        2   1   0
+
+*/
+
+    // 21 faces
+    var SHIFT_LUB_nZ =  20;
+    var SHIFT__UB_nZ =  19;
+    var SHIFT_RUB_nZ =  18;
+
+    var SHIFT_LUB_nX =  17;
+    var SHIFT_LUB_pY =  16;
+    var SHIFT__UB_pY =  15;
+    var SHIFT_RUB_pY =  14;
+    var SHIFT_RUB_pX =  13;
+
+    var SHIFT_LU__nX =  12;
+    var SHIFT_LU__pY =  11;
+    var SHIFT_MU__pY =  10;
+    var SHIFT_RU__pY =   9;
+    var SHIFT_RU__pX =   8;
+
+    var SHIFT_LUF_nX =   7;
+    var SHIFT_LUF_pY =   6;
+    var SHIFT__UF_pY =   5;
+    var SHIFT_RUF_pY =   4;
+    var SHIFT_RUF_pX =   3;
+
+    var SHIFT_LUF_pZ =   2;
+    var SHIFT__UF_pZ =   1;
+    var SHIFT_RUF_pZ =   0;
+
+/*
  * @param {Number} i - State between 0 and 2^21-1
  * @return {String} 21 faces as a bit string
  */
 function makeBitString( i )
 {
     var text = new Array(21);
+    var mask = 1 << SHIFT_LUB_nZ;
 
-    for( var face = 0; face < 21; ++face )
-        text[ face ] = ((i >> face) & 1) ? '1' : '0';
+    for( var face = 0; face < 21; ++face, mask >>= 1 )
+        text[ face ] = (i & mask) ? '1' : '0';
 
     var output = ''
         + text.slice( 0, 3).join('') + ':'
@@ -60,19 +106,19 @@ function cornerParity( state )
 {
     var parity = 0;
 
-        parity += ((state <<  1) & 2); // LUB CCW
-        parity += ((state >>  3) & 1); // LUB CW
+        parity += ((state >> SHIFT_LUB_nZ) & 1)*2; // LUB CCW
+        parity += ((state >> SHIFT_LUB_nX) & 1)  ; // LUB CW
 
-        parity += ((state >>  2) & 1); // RUB CW
-        parity += ((state >>  6) & 2); // RUB CCW
+        parity += ((state >> SHIFT_RUB_nZ) & 1)  ; // RUB CW
+        parity += ((state >> SHIFT_RUB_pX) & 1)*2; // RUB CCW
 
-        parity += ((state >> 12) & 2); // LUF CCW
-        parity += ((state >> 18) & 1); // LUF CW
+        parity += ((state >> SHIFT_LUF_nX) & 1)*2; // LUF CCW
+        parity += ((state >> SHIFT_LUF_pZ) & 1)  ; // LUF CW
 
-        parity += ((state >> 17) & 1); // RUF CW
-        parity += ((state >> 19) & 2); // RUF CCW
+        parity += ((state >> SHIFT_RUF_pX) & 1)  ; // RUF CW
+        parity += ((state >> SHIFT_RUF_pZ) & 1)*2; // RUF CCW
 
-    return parity % 3;
+    return parity % 3; // Valid == 0
 }
 
 /*
@@ -83,13 +129,12 @@ function edgeParity( state )
 {
     var parity = 0;
 
-        parity += ((state >>  1) & 1); // UB
-        parity += ((state >>  8) & 1); // LU
-        parity += ((state >> 12) & 1); // RU
-        parity += ((state >> 19) & 1); // UF
+        parity += ((state >> SHIFT__UB_nZ) & 1);
+        parity += ((state >> SHIFT_LU__nX) & 1);
+        parity += ((state >> SHIFT_RU__pX) & 1);
+        parity += ((state >> SHIFT__UF_pZ) & 1);
 
-    // Edge Parity % 2 = 0
-    return parity % 2;
+    return parity % 2; // Valid == 0
 }
 
 /*
@@ -129,53 +174,9 @@ function pad( text, width )
     = 108
 
     OLL Algoriths = 58
-
-    Last Layer
-
-        0   1   2
-       ___ ___ ___
-      |   |   |   |
-     3| 4 | 5 | 6 | 7
-      |___|___|___|
-      |   |   |   |
-     8| 9 | 10| 11|12
-      |___|___|___|
-      |   |   |   |
-    13| 14| 15| 16|17
-      |___|___|___|
-        18  19  20
-
-
 */
 function enum_yellow()
 {
-    // 21 faces
-    var SHIFT_LUB_nZ =   0;
-    var SHIFT__UB_nZ =   1;
-    var SHIFT_RUB_nZ =   2;
-
-    var SHIFT_LUB_nX =   3;
-    var SHIFT_LUB_pY =   4;
-    var SHIFT__UB_pY =   5;
-    var SHIFT_RUB_pY =   6;
-    var SHIFT_RUB_pX =   7;
-
-    var SHIFT_LU__nX =   8;
-    var SHIFT_LU__pY =   9;
-    var SHIFT_MU__pY =  10;
-    var SHIFT_RU__pY =  11;
-    var SHIFT_RU__pX =  12;
-
-    var SHIFT_LUF_nX =  13;
-    var SHIFT_LUF_pY =  14;
-    var SHIFT__UF_pY =  15;
-    var SHIFT_RUF_pY =  16;
-    var SHIFT_RUF_pX =  17;
-
-    var SHIFT_LUF_pZ =  18;
-    var SHIFT__UF_pZ =  19;
-    var SHIFT_RUF_pZ =  20;
-
     var state, last = (1 << 21);
 
     var ith = 1, nth = 1296; // 216;
@@ -261,9 +262,9 @@ function enum_yellow()
             // * Annotate Rotations
             //if (parityC != 0) continue; // 1296 -> 432
             //if (parityE != 0) continue; //  432 -> 216
+
          // console.log( "| %s/%d  | %s: | %s |  %d |  %d|", pad(ith,4), nth, pad(state,7), bitstring, parityC, parityE );
          // console.log( "# %s/%d: @ %s: $ %s CP:%d EP:%d" , pad(ith,4), nth, pad(state,7), bitstring, parityC, parityE );
-
             text = '';
 
             if( optColumn )

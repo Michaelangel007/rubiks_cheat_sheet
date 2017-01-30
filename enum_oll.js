@@ -176,8 +176,9 @@ function enum_yellow()
     var SHIFT__UF_pZ =  19;
     var SHIFT_RUF_pZ =  20;
 
-    var i, n = (1 << 21);
-    var valid = 1, nth = 1296; // 216;
+    var state, last = (1 << 21);
+
+    var ith = 1, nth = 1296; // 216;
     var bitstring;
     var parityC;
     var parityE;
@@ -232,26 +233,26 @@ function enum_yellow()
         console.log( head2 );
     }
 
-    for( i = 0; i < n; ++i )
+    for( state = 0; state < last; ++state )
     {
         // if middle is not yellow then cube is not valid
-        if( (i >> SHIFT_MU__pY) & 1 )
+        if( (state >> SHIFT_MU__pY) & 1 )
         {
             // Count # of yellow faces in each corner
-            if( invalidCorner( i, SHIFT_LUB_nZ, SHIFT_LUB_pY, SHIFT_LUB_nX ) ) continue; // LUB
-            if( invalidCorner( i, SHIFT_RUB_nZ, SHIFT_RUB_pY, SHIFT_RUB_pX ) ) continue; // RUB
-            if( invalidCorner( i, SHIFT_LUF_pZ, SHIFT_LUF_pY, SHIFT_LUF_nX ) ) continue; // LUF
-            if( invalidCorner( i, SHIFT_RUF_pZ, SHIFT_RUF_pY, SHIFT_RUF_pX ) ) continue; // RUF
+            if( invalidCorner( state, SHIFT_LUB_nZ, SHIFT_LUB_pY, SHIFT_LUB_nX ) ) continue; // LUB
+            if( invalidCorner( state, SHIFT_RUB_nZ, SHIFT_RUB_pY, SHIFT_RUB_pX ) ) continue; // RUB
+            if( invalidCorner( state, SHIFT_LUF_pZ, SHIFT_LUF_pY, SHIFT_LUF_nX ) ) continue; // LUF
+            if( invalidCorner( state, SHIFT_RUF_pZ, SHIFT_RUF_pY, SHIFT_RUF_pX ) ) continue; // RUF
 
             // Count # of yellow faces on each edge
-            if( invalidEdge( i, SHIFT__UB_nZ, SHIFT__UB_pY ) ) continue; // UB
-            if( invalidEdge( i, SHIFT_LU__nX, SHIFT_LU__pY ) ) continue; // LU
-            if( invalidEdge( i, SHIFT_RU__pX, SHIFT_RU__pY ) ) continue; // RU
-            if( invalidEdge( i, SHIFT__UF_pZ, SHIFT__UF_pY ) ) continue; // UB
+            if( invalidEdge( state, SHIFT__UB_nZ, SHIFT__UB_pY ) ) continue; // UB
+            if( invalidEdge( state, SHIFT_LU__nX, SHIFT_LU__pY ) ) continue; // LU
+            if( invalidEdge( state, SHIFT_RU__pX, SHIFT_RU__pY ) ) continue; // RU
+            if( invalidEdge( state, SHIFT__UF_pZ, SHIFT__UF_pY ) ) continue; // UB
 
-            parityC   = cornerParity ( i );
-            parityE   = edgeParity   ( i );
-            bitstring = makeBitString( i );
+            parityC   = cornerParity ( state );
+            parityE   = edgeParity   ( state );
+            bitstring = makeBitString( state );
 
             // TODO: FIXME:
             // * Remove bad Corner Parity
@@ -260,16 +261,16 @@ function enum_yellow()
             // * Annotate Rotations
             //if (parityC != 0) continue; // 1296 -> 432
             //if (parityE != 0) continue; //  432 -> 216
-         // console.log( "| %s/%d  | %s: | %s |  %d |  %d|", pad(valid,4), nth, pad(i,7), bitstring, parityC, parityE );
-         // console.log( "# %s/%d: @ %s: $ %s CP:%d EP:%d" , pad(valid,4), nth, pad(i,7), bitstring, parityC, parityE );
+         // console.log( "| %s/%d  | %s: | %s |  %d |  %d|", pad(ith,4), nth, pad(state,7), bitstring, parityC, parityE );
+         // console.log( "# %s/%d: @ %s: $ %s CP:%d EP:%d" , pad(ith,4), nth, pad(state,7), bitstring, parityC, parityE );
 
             text = '';
 
             if( optColumn )
             {
                 if( optIndex ) // intentional single then statement
-                    text += '| ' + pad(valid,4) + '/' + nth + ' ';
-                    text += '| ' + pad(i,7) + ' ';
+                    text += '| ' + pad( ith  , 4 ) + '/' + nth + ' ';
+                    text += '| ' + pad( state, 7 ) + ' ';
                     text += '| ' + bitstring+ ' ';
                 if( optParity ) // intentional single then statement
                     text += '| ' + parityC + ' | ' + parityC + ' ';
@@ -278,15 +279,15 @@ function enum_yellow()
             else
             {
                 if( optIndex ) // intentional 1-statement
-                    text += '# ' + pad(valid,4) + '/' + nth + ' ';
-                    text += '@ ' + pad(i,7) + ' ';
+                    text += '# ' + pad( ith  , 4 ) + '/' + nth + ' ';
+                    text += '@ ' + pad( state, 7 ) + ' ';
                     text += '$ ' + bitstring+ ' ';
                 if( optParity )
                     text += 'CP:' + parityC + ' EP:' + parityE;
             }
 
             console.log ( text );
-            valid++;
+            ith++;
         }
     }
 }

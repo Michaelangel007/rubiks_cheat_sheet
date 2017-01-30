@@ -141,9 +141,11 @@ function edgeParity( state )
  * Right align text
  */
 // ========================================================================
-function pad( text, width )
+function pad( text, width, spacer )
 {
-    return (new Array(width).join(' ') + text).slice( -width );
+    if (!spacer)
+        spacer = ' ';
+    return (new Array( width ).join( spacer ) + text).slice( -width );
 }
 
 /*

@@ -72,19 +72,20 @@ Copyleft (C) 2017
  * @param {Number} i - State between 0 and 2^21-1
  * @return {String} 21 faces as a bit string
  */
-char* makeBitString( int i )
+// ========================================================================
+char* makeBitString( int state )
 {
-    /*  */ char text[21];
+    /*  */ char text  [21];
     static char output[32];
 
     for( int face = 0; face < 21; ++face )
         text[ face ] = ((i >> face) & 1) ? '1' : '0';
 
-    strncpy( output+ 0, text+0, 3 ); strncpy( output+ 3, ":", 1 );
-    strncpy( output+ 4, text+3, 5 ); strncpy( output+ 9, ":", 1 );
-    strncpy( output+10, text+3, 5 ); strncpy( output+15, ":", 1 );
-    strncpy( output+16, text+3, 5 ); strncpy( output+21, ":", 1 );
-    strncpy( output+22, text+0, 3 );
+    strncpy( output+ 0, text+ 0, 3 ); strncpy( output+ 3, ":", 1 );
+    strncpy( output+ 4, text+ 3, 5 ); strncpy( output+ 9, ":", 1 );
+    strncpy( output+10, text+ 8, 5 ); strncpy( output+15, ":", 1 );
+    strncpy( output+16, text+13, 5 ); strncpy( output+21, ":", 1 );
+    strncpy( output+22, text+18, 3 );
     output[25] = 0;
 
     return output;

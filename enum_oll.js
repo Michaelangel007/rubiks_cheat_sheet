@@ -83,17 +83,10 @@ function edgeParity( state )
 {
     var parity = 0;
 
-        parity += ((state >>  1) & 1) * 1; // UB
-        parity += ((state >>  5) & 1) * 2;
-
-        parity += ((state >>  8) & 1) * 1; // LU
-        parity += ((state >>  9) & 1) * 2;
-
-        parity += ((state >> 11) & 1) * 1; // RU
-        parity += ((state >> 12) & 1) * 2;
-
-        parity += ((state >> 15) & 1) * 1; // UF
-        parity += ((state >> 19) & 1) * 2;
+        parity += ((state >>  1) & 1); // UB
+        parity += ((state >>  8) & 1); // LU
+        parity += ((state >> 12) & 1); // RU
+        parity += ((state >> 19) & 1); // UF
 
     // Edge Parity % 2 = 0
     return parity % 2;

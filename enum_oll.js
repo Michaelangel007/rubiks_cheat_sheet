@@ -253,6 +253,11 @@ function enum_yellow()
             parityE   = edgeParity   ( i );
             bitstring = makeBitString( i );
 
+            // TODO: FIXME:
+            // * Remove bad Corner Parity
+            // * Remove bad Edge Parity
+            // * Annotate Reflections
+            // * Annotate Rotations
             //if (parityC != 0) continue; // 1296 -> 432
             //if (parityE != 0) continue; //  432 -> 216
          // console.log( "| %s/%d  | %s: | %s |  %d |  %d|", pad(valid,4), nth, pad(i,7), bitstring, parityC, parityE );

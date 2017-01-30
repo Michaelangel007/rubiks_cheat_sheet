@@ -54,35 +54,23 @@ function invalidEdge( state, edge1, edge2 )
     return (count != 1);
 }
 
+// https://ruwix.com/the-rubiks-cube/unsolvable-rubiks-cube-invalid-scramble/
 // ========================================================================
 function cornerParity( state )
 {
     var parity = 0;
-    var corner;
 
-        corner = 0;
-        corner += ((state >>  0) & 1) * 1; // LUB
-        corner += ((state >>  3) & 1) * 2;
-        corner += ((state >>  4) & 1) * 3;
-        parity += corner;
+        parity += ((state <<  1) & 2); // LUB CCW
+        parity += ((state >>  3) & 1); // LUB CW
 
-        corner = 0;
-        corner += ((state >>  2) & 1) * 1; // RUB
-        corner += ((state >>  7) & 1) * 2;
-        corner += ((state >>  6) & 1) * 3;
-        parity += corner;
+        parity += ((state >>  2) & 1); // RUB CW
+        parity += ((state >>  6) & 2); // RUB CCW
 
-        corner = 0;
-        corner += ((state >> 13) & 1) * 1; // LUF
-        corner += ((state >> 18) & 1) * 2;
-        corner += ((state >> 14) & 1) * 3;
-        parity += corner;
+        parity += ((state >> 12) & 2); // LUF CCW
+        parity += ((state >> 18) & 1); // LUF CW
 
-        corner = 0;
-        corner += ((state >> 17) & 1) * 1; // RUF
-        corner += ((state >> 20) & 1) * 2;
-        corner += ((state >> 16) & 1) * 3;
-        parity += corner;
+        parity += ((state >> 17) & 1); // RUF CW
+        parity += ((state >> 19) & 2); // RUF CCW
 
     return parity % 3;
 }

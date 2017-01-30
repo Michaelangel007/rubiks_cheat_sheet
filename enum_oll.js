@@ -182,7 +182,56 @@ function enum_yellow()
     var parityC;
     var parityE;
 
+    var text;
+    var optColumn = false;
+    var optIndex  = false;
+    var optParity = false;
+    var args = process.argv.slice(2); // node.js
+    for( var iArg = 0; iArg < args.length; ++iArg )
+    {
+        switch( args[ iArg ] )
+        {
+            case '-c': optColumn = true; break;
+            case '-n': optIndex  = true; break;
+            case '-p': optParity = true; break;
+            case '-?':
+            default:
+                console.log( " -c  Disable column markdown" );
+                console.log( " -n  Show i'th / n'th column" );
+                console.log( " -p  Show Corner and Edge parity" );
+                return;
+        }
+    }
+
     console.log( "Number of OLL permutations after F2L ..." );
+    if( optColumn )
+    {
+        var head1 = '';
+        var head2 = '';
+
+        if( optIndex )
+        {           //# 1296/1296 '
+            head1 += "|# i'th/n'th";
+            head2 += "|----------:";
+        }
+
+        //        @  118384 $ 000:01110:01110:01110:000 CP:0 EP:0
+        head1 += '| @ ID    | $ Bit String              |';
+        head2 += '|--------:|:--------------------------|';
+
+        if( optParity )
+        {
+            head1 += 'CP |EP ';
+            head2 += ':-:|:-:';
+        }
+
+        head1 += '|';
+        head2 += '|';
+
+        console.log( head1 );
+        console.log( head2 );
+    }
+
     for( i = 0; i < n; ++i )
     {
         // if middle is not yellow then cube is not valid
@@ -207,7 +256,31 @@ function enum_yellow()
             //if (parityC != 0) continue; // 1296 -> 432
             //if (parityE != 0) continue; //  432 -> 216
          // console.log( "| %s/%d  | %s: | %s |  %d |  %d|", pad(valid,4), nth, pad(i,7), bitstring, parityC, parityE );
-            console.log( "# %s/%d: @ %s: $ %s CP:%d EP:%d" , pad(valid,4), nth, pad(i,7), bitstring, parityC, parityE );
+         // console.log( "# %s/%d: @ %s: $ %s CP:%d EP:%d" , pad(valid,4), nth, pad(i,7), bitstring, parityC, parityE );
+
+            text = '';
+
+            if( optColumn )
+            {
+                if( optIndex ) // intentional single then statement
+                    text += '| ' + pad(valid,4) + '/' + nth + ' ';
+                    text += '| ' + pad(i,7) + ' ';
+                    text += '| ' + bitstring+ ' ';
+                if( optParity ) // intentional single then statement
+                    text += '| ' + parityC + ' | ' + parityC + ' ';
+                    text += '|';
+            }
+            else
+            {
+                if( optIndex ) // intentional 1-statement
+                    text += '# ' + pad(valid,4) + '/' + nth + ' ';
+                    text += '@ ' + pad(i,7) + ' ';
+                    text += '$ ' + bitstring+ ' ';
+                if( optParity )
+                    text += 'CP:' + parityC + ' EP:' + parityE;
+            }
+
+            console.log ( text );
             valid++;
         }
     }

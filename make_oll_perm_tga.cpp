@@ -458,7 +458,7 @@ void makeBitmapOLL( int state )
     }
 
     char filename[ 32 ];
-    sprintf( filename, "oll_%d.tga", state );
+    sprintf( filename, "oll_%07d.tga", state );
 
     Targa_Save32( filename, 128, 128, bitmap );
 }

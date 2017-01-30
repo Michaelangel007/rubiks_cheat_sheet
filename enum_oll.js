@@ -187,7 +187,8 @@ function enum_yellow()
     var parityE;
 
     var text;
-    var optColumn = false;
+    var optColumn = false; // Markdown table column format
+    var optImage  = false;
     var optIndex  = false;
     var optParity = false;
     var args = process.argv.slice(2); // node.js
@@ -196,6 +197,7 @@ function enum_yellow()
         switch( args[ iArg ] )
         {
             case '-c': optColumn = true; break;
+            case '-i': optImage  = true; break;
             case '-n': optIndex  = true; break;
             case '-p': optParity = true; break;
             case '-?':
@@ -227,6 +229,12 @@ function enum_yellow()
         {
             head1 += 'CP |EP ';
             head2 += ':-:|:-:';
+        }
+
+        if( optImage )
+        {          //  ![118384](pics/perm/oll_118384.png)
+            head1 += '| Image ';
+            head2 += '|:------';
         }
 
         head1 += '|';
@@ -277,6 +285,8 @@ function enum_yellow()
                     text += '| ' + bitstring+ ' ';
                 if( optParity ) // intentional single then statement
                     text += '| ' + parityC + ' | ' + parityC + ' ';
+                if( optImage ) // intentional single then statement
+                    text += '| ![' + state + '](pics/perm/oll_' + pad( state, 7, '0' ) + '.png)' + ' ';
                     text += '|';
             }
             else
